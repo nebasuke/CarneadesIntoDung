@@ -11,8 +11,8 @@ homepage:      http://www.cs.nott.ac.uk/~bmv/CarneadesIntoDung/
 copyright:     Copyright (C) 2013 Bas van Gijzel
 synopsis:      A translation from the Carneades argumentation model into Dung's AFs.
 description:   A translation from the Carneades argumentation model 
-               (http://hackage.haskell.org/package/CarneadesDSL) into Dung's 
-               argumentation frameworks (http://hackage.haskell.org/package/Dung). 
+               (<http://hackage.haskell.org/package/CarneadesDSL>) into Dung's 
+               argumentation frameworks (<http://hackage.haskell.org/package/Dung>). 
                This package provides a translation function and correspondence
                properties. See "Towards a framework for the implementation and
                verification of translations between argumentation models" by 
