@@ -1,7 +1,0 @@
-0.9 => 1.0
-=============
-This package version is updated with a command line utility.
-
-* Make use of the CarneadesDSL Input and Dung Output modules to provide a 
-  command line interface reading a Carneades Argument Evaluation Structure
-  and possible give the evaluation result or output in CEGARTIX format.

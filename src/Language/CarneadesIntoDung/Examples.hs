@@ -22,8 +22,7 @@ module Language.CarneadesIntoDung.Examples
   )
  where
 import Language.CarneadesIntoDung.Translation
-import Language.Dung.AF
-import Language.Carneades.CarneadesDSL
+import Language.Carneades.CarneadesDSL (CAES)
 import Language.Carneades.ExampleCAES
 
 -- |Translation of the example CAES 'caes'.
