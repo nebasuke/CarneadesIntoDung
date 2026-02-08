@@ -22,8 +22,7 @@ module Language.CarneadesIntoDung.Examples
   )
  where
 import Language.CarneadesIntoDung.Translation
-import Language.Dung.AF
-import Language.Carneades.CarneadesDSL
+import Language.Carneades.CarneadesDSL (CAES)
 import Language.Carneades.ExampleCAES
 
 -- |Translation of the example CAES 'caes'.
@@ -104,4 +103,4 @@ exTrans' = translate' caes
 -- >>> corApp caes && corAcc caes
 -- True
 corProp :: CAES -> Bool
-corProp caes = corApp caes && corAcc caes
+corProp c = corApp c && corAcc c
