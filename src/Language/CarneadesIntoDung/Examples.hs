@@ -103,4 +103,4 @@ exTrans' = translate' caes
 -- >>> corApp caes && corAcc caes
 -- True
 corProp :: CAES -> Bool
-corProp c = corApp c && corAcc c
+corProp caes = corApp caes && corAcc caes

@@ -193,38 +193,38 @@ maxWeight args (CAES (_, (_, argWeight), _))
 transAcc :: PropLiteral -> [LConcreteArg] -> [LConcreteArg] -> CAES -> (LConcreteArg, [(LConcreteArg, LConcreteArg)])
 transAcc c [] _conArgs _caes = ((False, Left c),  [(defeater, (False, Left c))]) -- no applicable argument for p
 transAcc _c ((_, Left _): _proArgs) _conArgs _caes = error "Proposition in the list of applicable arguments"
-transAcc c ((False, _) : proArgs) cArgs caesArg = transAcc c proArgs cArgs caesArg
-transAcc c proArgs@((True, _) : _) cArgs caesArg@(CAES (_, _, standard))
+transAcc c ((False, _) : proArgs) conArgs caes = transAcc c proArgs conArgs caes
+transAcc c proArgs@((True, _) : _) conArgs caes@(CAES (_, _, standard))
  | standard c == Scintilla  = ((True, Left c), []) -- there is an applicable argument for p, thus acceptable under Scintilla
  | standard c == Preponderance &&
-   maxWeight proArgs caesArg > maxWeight cArgs caesArg = ((True, Left c), [])
+   maxWeight proArgs caes > maxWeight conArgs caes = ((True, Left c), [])
  | standard c == ClearAndConvincing &&
-   maxWeight proArgs caesArg > alpha &&
-   maxWeight proArgs caesArg > maxWeight cArgs caesArg + beta = ((True, Left c), [])
+   maxWeight proArgs caes > alpha &&
+   maxWeight proArgs caes > maxWeight conArgs caes + beta = ((True, Left c), [])
  | standard c == BeyondReasonableDoubt &&
-   maxWeight proArgs caesArg > alpha &&
-   maxWeight proArgs caesArg > maxWeight cArgs caesArg + beta &&
-   maxWeight cArgs caesArg < gamma = ((True, Left c), [])
- | standard c == DialecticalValidity && null cArgs  = ((True, Left c), [])
+   maxWeight proArgs caes > alpha &&
+   maxWeight proArgs caes > maxWeight conArgs caes + beta &&
+   maxWeight conArgs caes < gamma = ((True, Left c), [])
+ | standard c == DialecticalValidity && null conArgs  = ((True, Left c), [])
  | otherwise = ((False, Left c), [(defeater, (False, Left c))])
 
 -- |Correspondence of the applicability of arguments. 
 corApp :: CAES -> Bool
 corApp caes@(CAES (argSet, _, _)) =
   let translatedCAES = translate caes
-      appArgs        = filter (`applicable` caes)
-                              (getAllArgs argSet)
-      transArgs      = rights $ groundedExt translatedCAES
-  in fromList appArgs == fromList transArgs
+      applicableArgs  = filter (`applicable` caes)
+                               (getAllArgs argSet)
+      transArgs       = rights $ groundedExt translatedCAES
+  in fromList applicableArgs == fromList transArgs
 
 -- |Correspondence of the acceptability of propositional literals, including 
 -- assumptions.
 corAcc :: CAES -> Bool
 corAcc caes@(CAES (argSet, (assumptions, _), _)) =
   let translatedCAES = translate caes
-      accPropList    = filter (\p -> p `acceptable` caes ||
-                                     p `elem` assumptions)
-                              (getProps argSet)
-      transProps     = lefts $ delete (Left $ mkProp "defeater")
-                                      (groundedExt translatedCAES)
-  in fromList accPropList == fromList transProps
+      acceptableProps = filter (\p -> p `acceptable` caes ||
+                                      p `elem` assumptions)
+                               (getProps argSet)
+      transProps      = lefts $ delete (Left $ mkProp "defeater")
+                                       (groundedExt translatedCAES)
+  in fromList acceptableProps == fromList transProps
